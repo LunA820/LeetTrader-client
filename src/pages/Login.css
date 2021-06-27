@@ -1,0 +1,30 @@
+.loginPage{
+  background-color: #282c34;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(6px + 2.5vmin);
+  color: white;
+  padding-left: 7vw;
+  padding-right: 7vw;
+}
+
+.lt-description{
+  background-color: antiquewhite;
+  width: 50vw;
+  height: 70vh;
+  margin-right: 10px;
+  border-radius: 4%;
+  padding: 30px;
+  color: #282c34;
+  word-wrap: break-word
+}
+
+.loginForm{
+  border: solid;
+  border-radius: 5%;
+  padding: 23px;
+}
+
