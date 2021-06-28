@@ -1,10 +1,11 @@
 import React, {useState, useContext} from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Axios from 'axios'
 import {UidContext} from '../context/UidContext';
 import './Login.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 export default function Login() {
   const {setUid} = useContext(UidContext)

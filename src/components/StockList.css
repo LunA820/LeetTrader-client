@@ -1,0 +1,16 @@
+.stockList{
+  width: 55vw;
+  min-width: 500px;
+}
+
+.stockListHead{
+  color: orange;
+}
+
+.sumTxt{
+  text-align: left;
+}
+
+td {
+  text-align: center;
+}

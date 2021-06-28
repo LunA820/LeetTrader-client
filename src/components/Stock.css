@@ -1,0 +1,15 @@
+.searchBar{
+  display: grid;
+  grid-template-columns: 2.5fr 1fr;
+}
+
+.stockCard{
+  width: 30vw;
+  min-width: 300px;
+  min-height: 60vh;
+}
+
+.searchTxt{
+  text-align: left;
+  color: orange
+}

@@ -7,11 +7,13 @@ import {UidContext} from './context/UidContext'
 
 function App() {
   const [uid, setUid] = useState(-1)
+  const serverUrl = 'https://luna-lt-server.herokuapp.com'
 
+  
   return (
     <div className="App">
       <UidContext.Provider value={{uid, setUid}}>
-        {uid > 0 ? <Home />:<Login />}
+        {uid > 0 ? <Home serverUrl={serverUrl}/>:<Login />}
       </UidContext.Provider>
     </div>
   );
