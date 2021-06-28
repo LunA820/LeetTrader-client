@@ -11,22 +11,31 @@ import './Stock.css'
 
 
 function Stock(props) {
+  // Stock States
   const [sid, setSid] = useState(-1)
   const [searchId, setSearchId] = useState(false)
   const [stockInfo, setStockInfo] = useState({
     c: -1, h: -1, l: -1, o:-1, pc:-1, t: -1
   })
+
+  // Trading States
   const [buyQty, setBuyQty] = useState(-1)
-  const [tradeAlert, settradeAlert] = useState(false)
-  const [overSellAlert, setOverSellAlert] = useState(false)
   const [sellQty, setSellQty] = useState(-1)
+
+  // Loading & Refreshing States
   const {setRefresh} = useContext(StockContext)
   const [loading, setLoading] = useState(false)
+  
+  // Alert States
+  const [overdrawAlert, setOverdrawAlert] = useState(false)
+  const [tradeAlert, settradeAlert] = useState(false)
+  const [overSellAlert, setOverSellAlert] = useState(false)
 
   // Clear all alerts
   const clearAlert = () => {
     settradeAlert(false)
     setOverSellAlert(false)
+    setOverdrawAlert(false)
   }
 
   /**
@@ -62,14 +71,20 @@ function Stock(props) {
       Axios({
         method: 'post',
         url: props.url+'/api/buy',
-        data: {uid: props.id, sid: searchId, qty: q}
+        data: {uid: props.id, sid: searchId, qty: q, cost: q*stockInfo.c}
       })
       .then(res=>{
+        if(res.data=="Insufficient_fund"){
+          setOverdrawAlert(true)
+        }
         setLoading(false)
         setRefresh(true)
         settradeAlert(false)
       })
-    }else{settradeAlert(true)}
+    }else{
+      settradeAlert(true)
+      setLoading(false)
+    }
   }
 
   //Clear alerts, then sell stock according to {SearchId}.
@@ -81,7 +96,7 @@ function Stock(props) {
       Axios({
         method: 'post',
         url: props.url+'/api/sell',
-        data: {uid: props.id, sid: searchId, qty: q}
+        data: {uid: props.id, sid: searchId, qty: q, sales: q*stockInfo.c}
       })
       .then(res=>{
         setLoading(false)
@@ -91,7 +106,10 @@ function Stock(props) {
         }
         setRefresh(true)
       })
-    }else{settradeAlert(true)}
+    }else{
+      settradeAlert(true)
+      setLoading(false)
+    }
   }
 
 
@@ -106,7 +124,7 @@ function Stock(props) {
             />
             <Button variant="outline-success" onClick={search}>
               Search
-              </Button>
+            </Button>
           </Form.Group>
           <br />
           
@@ -128,14 +146,16 @@ function Stock(props) {
                     <tr>
                       <td className="searchTxt">&nbsp;&nbsp;Current</td>
                       {stockInfo.c >= stockInfo.pc ? 
-                        <td className="pos">{stockInfo.c}</td>:<td className="neg">{stockInfo.c}</td>
+                        <td className="pos">{stockInfo.c.toFixed(2)}</td>
+                        :
+                        <td className="neg">{stockInfo.c.toFixed(2)}</td>
                       }
                       
                     </tr>
-                    <tr><td className="searchTxt">&nbsp;&nbsp;High</td><td>{stockInfo.h}</td></tr>
-                    <tr><td className="searchTxt">&nbsp;&nbsp;Low</td><td>{stockInfo.l}</td></tr>
-                    <tr><td className="searchTxt">&nbsp;&nbsp;Open</td><td>{stockInfo.o}</td></tr>
-                    <tr><td className="searchTxt">&nbsp;&nbsp;Prev. Close</td><td>{stockInfo.pc}</td></tr>
+                    <tr><td className="searchTxt">&nbsp;&nbsp;High</td><td>{stockInfo.h.toFixed(2)}</td></tr>
+                    <tr><td className="searchTxt">&nbsp;&nbsp;Low</td><td>{stockInfo.l.toFixed(2)}</td></tr>
+                    <tr><td className="searchTxt">&nbsp;&nbsp;Open</td><td>{stockInfo.o.toFixed(2)}</td></tr>
+                    <tr><td className="searchTxt">&nbsp;&nbsp;Prev. Close</td><td>{stockInfo.pc.toFixed(2)}</td></tr>
                   </tbody>
                 </Table>
                 <Form.Group className="searchBar">
@@ -143,7 +163,7 @@ function Stock(props) {
                     placeholder="Quantity" 
                     onChange={e => setBuyQty(e.target.value)}
                   />
-                  <Button variant="secondary" onClick={buy}>Buy</Button>
+                  <Button variant="outline-dark" onClick={buy}>Buy</Button>
 
                 </Form.Group>
                 <br />
@@ -152,10 +172,11 @@ function Stock(props) {
                     placeholder="Quantity" 
                     onChange={e => setSellQty(e.target.value)}
                   />
-                  <Button variant="secondary" onClick={sell}>Sell</Button>
+                  <Button variant="outline-dark" onClick={sell}>Sell</Button>
                 </Form.Group>
                 {tradeAlert && <Alert variant="danger">Qty need to be a positive integer.</Alert>}
                 {overSellAlert && <Alert variant="danger">You do not have enough to sell.</Alert>}
+                {overdrawAlert && <Alert variant="danger">You do not have enough credit.</Alert>}
               </div>
 
           }

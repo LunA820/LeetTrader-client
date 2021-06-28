@@ -1,0 +1,78 @@
+import React, {useState, useContext} from 'react'
+import Axios from 'axios'
+import {StockContext} from '../context/StockContext'
+import Num from './Num'
+import Table from 'react-bootstrap/Table'
+import StockList from './StockList'
+import './BalanceSheet.css'
+
+
+export default function BalanceSheet(props) {
+  const [bank, setBank] = useState("")
+  const [stockWorth, setStockWorth] = useState("")
+  const {refresh, setRefresh} = useContext(StockContext)
+  let init_bal = 100000
+
+  // Fetch with backend API to get Bank balance or Stock Worth
+  function fetchServer(req){
+    Axios({
+      method: 'post',
+      url: props.url+'/api/'+req,
+      data: {uid: props.id}
+    })
+    .then(res => {
+      if(res.data !== -1){
+        if(req == 'getBal'){setBank(res.data)}
+        if(req == 'getStockWorth'){setStockWorth(res.data)}
+      }
+    })
+  }
+  const getBank = () => fetchServer('getBal')
+  const getStockWorth = () => fetchServer('getStockWorth')
+
+
+  // Everytime user buy/sell stock, refresh balance sheet
+  if(refresh){
+    getBank()
+    getStockWorth()
+    setRefresh(false)
+  }
+
+  return (
+    <div>
+      <div className="balSheet">
+        <h2>Summary</h2>
+        <Table striped bordered hover size="sm" variant="dark">
+          <thead className="stockListHead">
+            <tr><td>Account</td><td>USD</td></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="sumTxt">&nbsp;&nbsp;&nbsp;&nbsp;Initial Bank Balance</td>
+              <td>{init_bal.toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td className="sumTxt">&nbsp;&nbsp;&nbsp;&nbsp;Current Bank Balance</td>
+              {bank !== "" ? <td>{bank.toFixed(2)}</td>:<td>Loading...</td>}
+            </tr>
+            <tr>
+              <td className="sumTxt">&nbsp;&nbsp;&nbsp;&nbsp;Stocks Worth</td>
+              {stockWorth !== "" ? <td>{stockWorth.toFixed(2)}</td>:<td>Loading...</td>}
+            </tr>
+            <tr>
+              <td className="sumTxt">&nbsp;&nbsp;&nbsp;&nbsp;Profit / Loss</td>
+              {
+                (stockWorth !== "" && bank !== "" ) ? 
+                  <td><Num value={(bank+stockWorth-init_bal).toFixed(2)}/></td>
+                  :
+                  <td>Loading...</td>
+              }
+            </tr>
+          </tbody>
+        </Table>
+      </div>
+      <br />
+      <StockList id={props.id} url={props.url} />
+    </div>
+  )
+}

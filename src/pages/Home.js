@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import Stock from '../components/Stock'
-import StockList from '../components/StockList'
+import BalanceSheet from '../components/BalanceSheet'
 import {StockContext} from '../context/StockContext'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
@@ -28,7 +28,7 @@ export default function Home(props) {
 
       <div className="stockZone">
         <StockContext.Provider value={{refresh, setRefresh}}>
-          <StockList id={id} url={url}/>
+          <BalanceSheet id={id} url={url}/>
           <Stock id={id} url={url} />
         </StockContext.Provider>
       </div>
