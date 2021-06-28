@@ -104,7 +104,7 @@ function Stock(props) {
               placeholder="Stock Code (i.e. AAPL)" 
               onChange={e => setSid(e.target.value)}
             />
-            <Button variant="success" onClick={search}>
+            <Button variant="outline-success" onClick={search}>
               Search
               </Button>
           </Form.Group>
