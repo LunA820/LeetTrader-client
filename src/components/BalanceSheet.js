@@ -3,13 +3,14 @@ import Axios from 'axios'
 import {StockContext} from '../context/StockContext'
 import Num from './Num'
 import Table from 'react-bootstrap/Table'
+import Card from 'react-bootstrap/Card'
 import StockList from './StockList'
 import './BalanceSheet.css'
 
 
 export default function BalanceSheet(props) {
-  const [bank, setBank] = useState("")
-  const [stockWorth, setStockWorth] = useState("")
+  const [bank, setBank] = useState(0)
+  const [stockWorth, setStockWorth] = useState(-1)
   const {refresh, setRefresh} = useContext(StockContext)
   let init_bal = 100000
 
@@ -30,7 +31,6 @@ export default function BalanceSheet(props) {
   const getBank = () => fetchServer('getBal')
   const getStockWorth = () => fetchServer('getStockWorth')
 
-
   // Everytime user buy/sell stock, refresh balance sheet
   if(refresh){
     getBank()
@@ -38,41 +38,46 @@ export default function BalanceSheet(props) {
     setRefresh(false)
   }
 
+  
   return (
     <div>
-      <div className="balSheet">
-        <h2>Summary</h2>
-        <Table striped bordered hover size="sm" variant="dark">
-          <thead className="stockListHead">
-            <tr><td>Account</td><td>USD</td></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="sumTxt">&nbsp;&nbsp;&nbsp;&nbsp;Initial Bank Balance</td>
-              <td>{init_bal.toFixed(2)}</td>
-            </tr>
-            <tr>
-              <td className="sumTxt">&nbsp;&nbsp;&nbsp;&nbsp;Current Bank Balance</td>
-              {bank !== "" ? <td>{bank.toFixed(2)}</td>:<td>Loading...</td>}
-            </tr>
-            <tr>
-              <td className="sumTxt">&nbsp;&nbsp;&nbsp;&nbsp;Stocks Worth</td>
-              {stockWorth !== "" ? <td>{stockWorth.toFixed(2)}</td>:<td>Loading...</td>}
-            </tr>
-            <tr>
-              <td className="sumTxt">&nbsp;&nbsp;&nbsp;&nbsp;Profit / Loss</td>
-              {
-                (stockWorth !== "" && bank !== "" ) ? 
-                  <td><Num value={(bank+stockWorth-init_bal).toFixed(2)}/></td>
-                  :
-                  <td>Loading...</td>
-              }
-            </tr>
-          </tbody>
-        </Table>
-      </div>
-      <br />
-      <StockList id={props.id} url={props.url} />
+      <Card>
+        <Card.Body>
+        <div className="balSheet">
+          <h2>Summary</h2>
+          <Table striped bordered hover size="sm" variant="dark">
+            <thead className="stockListHead">
+              <tr><td>Account</td><td>USD</td></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="sumTxt">&nbsp;&nbsp;&nbsp;&nbsp;Initial Bank Balance</td>
+                <td>{init_bal.toFixed(2)}</td>
+              </tr>
+              <tr>
+                <td className="sumTxt">&nbsp;&nbsp;&nbsp;&nbsp;Current Bank Balance</td>
+                {bank !== 0 ? <td>{bank.toFixed(2)}</td>:<td>Loading...</td>}
+              </tr>
+              <tr>
+                <td className="sumTxt">&nbsp;&nbsp;&nbsp;&nbsp;Stocks Worth</td>
+                {stockWorth !== -1 ? <td>{stockWorth.toFixed(2)}</td>:<td>Loading...</td>}
+              </tr>
+              <tr>
+                <td className="sumTxt">&nbsp;&nbsp;&nbsp;&nbsp;Profit / Loss</td>
+                {
+                  (stockWorth !== -1 && bank !== 0 ) ? 
+                    <td><Num value={(bank+stockWorth-init_bal).toFixed(2)}/></td>
+                    :
+                    <td>Loading...</td>
+                }
+              </tr>
+            </tbody>
+          </Table>
+        </div>
+        <br />
+        <StockList id={props.id} url={props.url} />
+        </Card.Body>
+      </Card>
     </div>
   )
 }

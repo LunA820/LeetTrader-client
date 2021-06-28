@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import Alert from 'react-bootstrap/Alert'
 import {StockContext} from '../context/StockContext'
+import Trade from './Trade'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Stock.css'
 
@@ -19,31 +20,22 @@ function Stock(props) {
   })
 
   // Trading States
-  const [buyQty, setBuyQty] = useState(-1)
-  const [sellQty, setSellQty] = useState(-1)
+ 
 
   // Loading & Refreshing States
   const {setRefresh} = useContext(StockContext)
   const [loading, setLoading] = useState(false)
   
-  // Alert States
-  const [overdrawAlert, setOverdrawAlert] = useState(false)
-  const [tradeAlert, settradeAlert] = useState(false)
-  const [overSellAlert, setOverSellAlert] = useState(false)
+  
 
   // Clear all alerts
-  const clearAlert = () => {
-    settradeAlert(false)
-    setOverSellAlert(false)
-    setOverdrawAlert(false)
-  }
+  
 
   /**
    * Search Stock according to {sid}.
    * If stock code is valid, set {searchId} = {sid},
    */
   const search = () => {
-    clearAlert()
     setLoading(true)
     Axios({
       method: 'post',
@@ -55,62 +47,11 @@ function Stock(props) {
       setStockInfo(res.data)
       if(res.data.c !== 0){
         setSearchId(sid)
-        settradeAlert(false)
       }
     })
   }
 
-  //Clear alerts, then buy stock according to {SearchId}.
-  const buy = () => {
-    clearAlert()
-    setLoading(true)
-
-    // Check valid input, display alert if not
-    let q = parseInt(buyQty)      
-    if (q && q > 0){
-      Axios({
-        method: 'post',
-        url: props.url+'/api/buy',
-        data: {uid: props.id, sid: searchId, qty: q, cost: q*stockInfo.c}
-      })
-      .then(res=>{
-        if(res.data=="Insufficient_fund"){
-          setOverdrawAlert(true)
-        }
-        setLoading(false)
-        setRefresh(true)
-        settradeAlert(false)
-      })
-    }else{
-      settradeAlert(true)
-      setLoading(false)
-    }
-  }
-
-  //Clear alerts, then sell stock according to {SearchId}.
-  const sell = () => {
-    clearAlert()
-    setLoading(true)
-    let q = parseInt(sellQty)
-    if (q && q > 0){
-      Axios({
-        method: 'post',
-        url: props.url+'/api/sell',
-        data: {uid: props.id, sid: searchId, qty: q, sales: q*stockInfo.c}
-      })
-      .then(res=>{
-        setLoading(false)
-        if(!res.data){
-          setOverSellAlert(true)
-          return
-        }
-        setRefresh(true)
-      })
-    }else{
-      settradeAlert(true)
-      setLoading(false)
-    }
-  }
+  
 
 
   return (
@@ -129,8 +70,7 @@ function Stock(props) {
           <br />
           
           {
-            (stockInfo.c === -1 && !loading) &&
-              <Alert variant="info">
+            (stockInfo.c === -1 && !loading) && <Alert variant="info">
                 Search stock information by entering stock code.
                 You can then simulate buying or selling the stock you search. 
               </Alert>
@@ -158,32 +98,14 @@ function Stock(props) {
                     <tr><td className="searchTxt">&nbsp;&nbsp;Prev. Close</td><td>{stockInfo.pc.toFixed(2)}</td></tr>
                   </tbody>
                 </Table>
-                <Form.Group className="searchBar">
-                  <Form.Control 
-                    placeholder="Quantity" 
-                    onChange={e => setBuyQty(e.target.value)}
-                  />
-                  <Button variant="outline-dark" onClick={buy}>Buy</Button>
 
-                </Form.Group>
-                <br />
-                <Form.Group className="searchBar">
-                  <Form.Control 
-                    placeholder="Quantity" 
-                    onChange={e => setSellQty(e.target.value)}
-                  />
-                  <Button variant="outline-dark" onClick={sell}>Sell</Button>
-                </Form.Group>
-                {tradeAlert && <Alert variant="danger">Qty need to be a positive integer.</Alert>}
-                {overSellAlert && <Alert variant="danger">You do not have enough to sell.</Alert>}
-                {overdrawAlert && <Alert variant="danger">You do not have enough credit.</Alert>}
+                <Trade id={props.id} searchId={searchId} url={props.url} price={stockInfo.c}/>
+                
               </div>
 
           }
-          
         </Card.Body>
       </Card>
-      <br />
     </div>
   )
 }
