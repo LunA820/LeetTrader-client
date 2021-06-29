@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import './App.css';
 import Login from './pages/Login'
 import Home from './pages/Home'
+import LtNav from './components/LtNav'
 import {UidContext} from './context/UidContext'
 
 
@@ -12,9 +13,11 @@ function App() {
   
   return (
     <div className="App">
+      {uid > 0 ? <LtNav login={true}/> : <LtNav login={false}/>}
       <UidContext.Provider value={{uid, setUid}}>
         {uid > 0 ? <Home serverUrl={serverUrl}/>:<Login />}
       </UidContext.Provider>
+      <footer className="copyRight">Copyright &copy; Luna Yang 2021</footer>
     </div>
   );
 }

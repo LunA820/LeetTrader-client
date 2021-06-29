@@ -1,9 +1,7 @@
 import React, {useState, useContext} from 'react'
 import Axios from 'axios'
-import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import Table from 'react-bootstrap/Table'
 import Alert from 'react-bootstrap/Alert'
 import {StockContext} from '../context/StockContext'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -89,7 +87,7 @@ function Trade(props) {
             placeholder="Quantity" 
             onChange={e => setBuyQty(e.target.value)}
           />
-          <Button variant="outline-dark" onClick={buy}>Buy</Button>
+          <Button variant="dark" onClick={buy}>Buy</Button>
         </Form.Group>
 
         <br />
@@ -98,7 +96,7 @@ function Trade(props) {
             placeholder="Quantity" 
             onChange={e => setSellQty(e.target.value)}
           />
-          <Button variant="outline-dark" onClick={sell}>Sell</Button>
+          <Button variant="dark" onClick={sell}>Sell</Button>
         </Form.Group>
 
         {tradeAlert && <Alert variant="danger">Qty need to be a positive integer.</Alert>}

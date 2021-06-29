@@ -1,7 +1,21 @@
+.App{
+  background-image: url("./assets/lt-bg_1.jpg");
+  background-size: cover;
+  min-height: 100vh;
+}
+
 .neg{
   color: red
 }
 
 .pos{
   color: greenyellow
+}
+
+.copyRight{
+  color: white;
+  text-align: center;
+  padding-top: 3vh;
+  background-color: rgba(40, 40, 40, 0.7);
+  min-height: 10vh;
 }

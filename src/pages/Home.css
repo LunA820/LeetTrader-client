@@ -1,34 +1,12 @@
-
+.homePage{
+  background-image: url("../assets/lt-bg_1.jpg");
+  background-size: cover;
+}
 
 .stockZone{
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap-reverse;
-  min-height: 60vh;
+  min-height: 70vh;
   margin-top: 7vh;
-}
-
-.homeNavbar{
-  padding: 20px 60px 20px 60px;
-  display: grid;
-  grid-template-columns: 4fr 1fr;
-  min-height: 14vh;
-}
-
-.navBrand{
-  font-size: 2.5vw;
-}
-
-.navItems{
-  text-align: right;
-  font-size: 18px;
-}
-
-.copyRight{
-  color: white;
-  text-align: center;
-  padding-top: 3vh;
-  background-color: rgb(30, 30, 35);
-  min-height: 10vh;
-  margin-top: 5vh;
 }

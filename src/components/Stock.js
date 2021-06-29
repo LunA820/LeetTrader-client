@@ -1,12 +1,13 @@
-import React, {useState, useContext} from 'react'
+import React, {useState} from 'react'
 import Axios from 'axios'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import Table from 'react-bootstrap/Table'
+import SearchTable from './SearchTable'
 import Alert from 'react-bootstrap/Alert'
-import {StockContext} from '../context/StockContext'
+import Spinner from 'react-bootstrap/Spinner'
 import Trade from './Trade'
+import SearchTut from './SearchTut'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Stock.css'
 
@@ -18,29 +19,20 @@ function Stock(props) {
   const [stockInfo, setStockInfo] = useState({
     c: -1, h: -1, l: -1, o:-1, pc:-1, t: -1
   })
-
-  // Trading States
- 
-
-  // Loading & Refreshing States
-  const {setRefresh} = useContext(StockContext)
   const [loading, setLoading] = useState(false)
-  
-  
-
-  // Clear all alerts
   
 
   /**
    * Search Stock according to {sid}.
    * If stock code is valid, set {searchId} = {sid},
+   * searchId will be passed to the Trade component for buying / selling.
    */
   const search = () => {
     setLoading(true)
     Axios({
       method: 'post',
       url: props.url+'/api/search',
-      data: {sid: sid}
+      data: {sid: sid.toUpperCase()}
     })
     .then(res=>{
       setLoading(false)
@@ -50,8 +42,6 @@ function Stock(props) {
       }
     })
   }
-
-  
 
 
   return (
@@ -63,46 +53,27 @@ function Stock(props) {
               placeholder="Stock Code (i.e. AAPL)" 
               onChange={e => setSid(e.target.value)}
             />
-            <Button variant="outline-success" onClick={search}>
-              Search
-            </Button>
+            <Button variant="success" onClick={search}>Search</Button>
           </Form.Group>
           <br />
-          
-          {
-            (stockInfo.c === -1 && !loading) && <Alert variant="info">
-                Search stock information by entering stock code.
-                You can then simulate buying or selling the stock you search. 
-              </Alert>
+          { // Load Spinner
+            loading && <div><Spinner animation="grow" variant="primary" />
+            <Spinner animation="grow" variant="secondary" /><Spinner animation="grow" variant="success" />
+            <Spinner animation="grow" variant="danger" /><Spinner animation="grow" variant="warning" />
+            </div>
           }
-          
-          {stockInfo.c === 0 && <Alert variant="danger">Invalid Stock Code</Alert>}
-          {loading && <Alert variant="primary">Now loading ...</Alert>}
           {
-            (stockInfo.c > 0 && !loading) && 
-              <div>
-                <Table striped bordered hover size="sm" variant="dark">
-                  <tbody>
-                    <tr>
-                      <td className="searchTxt">&nbsp;&nbsp;Current</td>
-                      {stockInfo.c >= stockInfo.pc ? 
-                        <td className="pos">{stockInfo.c.toFixed(2)}</td>
-                        :
-                        <td className="neg">{stockInfo.c.toFixed(2)}</td>
-                      }
-                      
-                    </tr>
-                    <tr><td className="searchTxt">&nbsp;&nbsp;High</td><td>{stockInfo.h.toFixed(2)}</td></tr>
-                    <tr><td className="searchTxt">&nbsp;&nbsp;Low</td><td>{stockInfo.l.toFixed(2)}</td></tr>
-                    <tr><td className="searchTxt">&nbsp;&nbsp;Open</td><td>{stockInfo.o.toFixed(2)}</td></tr>
-                    <tr><td className="searchTxt">&nbsp;&nbsp;Prev. Close</td><td>{stockInfo.pc.toFixed(2)}</td></tr>
-                  </tbody>
-                </Table>
-
-                <Trade id={props.id} searchId={searchId} url={props.url} price={stockInfo.c}/>
-                
-              </div>
-
+            !loading && <div>
+              {stockInfo.c === -1 && <SearchTut />}
+              {stockInfo.c === 0 && <Alert variant="danger">Invalid Stock Code</Alert>}
+              {stockInfo.c > 0 && <div>
+                <SearchTable sInfo={stockInfo} sid={searchId}/>
+                <Trade id={props.id} searchId={searchId} url={props.url} price={stockInfo.c}/><br/>
+                <Alert variant="warning">
+                  Find more stock codes at <a href="https://www.nasdaq.com/market-activity/stocks/screener" target="_blank">here</a>.
+                </Alert>
+              </div>}
+            </div>
           }
         </Card.Body>
       </Card>
