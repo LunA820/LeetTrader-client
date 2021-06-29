@@ -45,8 +45,8 @@ export default function Login() {
     })
     .then(res=>{
       setLoading(false)
-      if (m == 'login'){
-        res.data == -1 ? setLoginAlert(true) : setUid(res.data)
+      if (m === 'login'){
+        res.data === -1 ? setLoginAlert(true) : setUid(res.data)
       }
       else{
         res.data ? setRegSuccess(true) : setRegAlert(true)

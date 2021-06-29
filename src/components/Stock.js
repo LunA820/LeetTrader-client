@@ -32,7 +32,7 @@ function Stock(props) {
     Axios({
       method: 'post',
       url: props.url+'/api/search',
-      data: {sid: sid.toUpperCase()}
+      data: {sid: sid}
     })
     .then(res=>{
       setLoading(false)
@@ -51,15 +51,15 @@ function Stock(props) {
           <Form.Group className="searchBar">
             <Form.Control 
               placeholder="Stock Code (i.e. AAPL)" 
-              onChange={e => setSid(e.target.value)}
+              onChange={e => setSid((e.target.value).toUpperCase())}
             />
             <Button variant="success" onClick={search}>Search</Button>
           </Form.Group>
           <br />
           { // Load Spinner
             loading && <div><Spinner animation="grow" variant="primary" />
-            <Spinner animation="grow" variant="secondary" /><Spinner animation="grow" variant="success" />
-            <Spinner animation="grow" variant="danger" /><Spinner animation="grow" variant="warning" />
+            <Spinner animation="grow" variant="secondary" />&nbsp;<Spinner animation="grow" variant="success" />&nbsp;
+            <Spinner animation="grow" variant="danger" />&nbsp;<Spinner animation="grow" variant="warning" />
             </div>
           }
           {
@@ -70,7 +70,12 @@ function Stock(props) {
                 <SearchTable sInfo={stockInfo} sid={searchId}/>
                 <Trade id={props.id} searchId={searchId} url={props.url} price={stockInfo.c}/><br/>
                 <Alert variant="warning">
-                  Find more stock codes at <a href="https://www.nasdaq.com/market-activity/stocks/screener" target="_blank">here</a>.
+                  Find more stock codes at <a 
+                    href="https://www.nasdaq.com/market-activity/stocks/screener" 
+                    target="_blank"
+                    rel="noreferrer">
+                      here
+                  </a>.
                 </Alert>
               </div>}
             </div>

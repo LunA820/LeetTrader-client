@@ -41,7 +41,7 @@ function Trade(props) {
         data: {uid: props.id, sid: props.searchId, qty: q, cost: q*(props.price)}
       })
       .then(res=>{
-        if(res.data=="Insufficient_fund"){
+        if(res.data==="Insufficient_fund"){
           setOverdrawAlert(true)
         }
         setLoading(false)

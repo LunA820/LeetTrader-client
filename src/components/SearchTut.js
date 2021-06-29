@@ -13,7 +13,8 @@ function SearchTut() {
         <li>GOOGL (Alphabet Inc Class A)</li>
         <li>TSLA (Tesla Inc)</li>
       </ul>
-      You can find more stock codes at <a href="https://www.nasdaq.com/market-activity/stocks/screener" target="_blank">here</a>.
+      You can find more stock codes 
+      at <a href="https://www.nasdaq.com/market-activity/stocks/screener" target="_blank" rel="noreferrer">here</a>.
     </Alert>
   )
 }

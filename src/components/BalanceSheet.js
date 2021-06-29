@@ -25,8 +25,8 @@ export default function BalanceSheet(props) {
     })
     .then(res => {
       if(res.data !== -1){
-        if(req == 'getBal'){setBank(res.data)}
-        if(req == 'getStockWorth'){setStockWorth(res.data)}
+        if(req === 'getBal'){setBank(res.data)}
+        if(req === 'getStockWorth'){setStockWorth(res.data)}
       }
     })
   }
@@ -46,7 +46,7 @@ export default function BalanceSheet(props) {
       <Card className="bs_card">
         <Card.Body>
         <div className="balSheet">
-          {props.id == 1 && <Alert variant="danger" className="guestAlert">
+          {props.id === 1 && <Alert variant="danger" className="guestAlert">
             You are using a guest account which shares public data. <br />
             Register your own account so that you can have your own database!
           </Alert>}
