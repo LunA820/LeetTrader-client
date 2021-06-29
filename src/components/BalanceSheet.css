@@ -4,7 +4,7 @@
 
 .stockList{
   width: 55vw;
-  min-width: 500px;
+  max-width: 80vw;
 }
 
 .stockListHead{

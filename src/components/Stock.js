@@ -64,9 +64,7 @@ function Stock(props) {
           }
           {
             !loading && <div>
-              {stockInfo.c === -1 && <SearchTut />}
-              {stockInfo.c === 0 && <Alert variant="danger">Invalid Stock Code</Alert>}
-              {stockInfo.c > 0 && <div>
+              {stockInfo.c > 0 ? <div>
                 <SearchTable sInfo={stockInfo} sid={searchId}/>
                 <Trade id={props.id} searchId={searchId} url={props.url} price={stockInfo.c}/><br/>
                 <Alert variant="warning">
@@ -77,7 +75,11 @@ function Stock(props) {
                       here
                   </a>.
                 </Alert>
-              </div>}
+              </div>:<div>
+                {stockInfo.c === 0 && <Alert variant="danger">Invalid Stock Code</Alert>}
+                <SearchTut />
+              </div>
+              }
             </div>
           }
         </Card.Body>

@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from 'react-bootstrap/Navbar'
+import Button from 'react-bootstrap/Button'
 import Nav from 'react-bootstrap/Nav'
 import './LtNav.css'
 
@@ -10,8 +11,6 @@ function LtNav(props) {
       <Navbar.Brand className="navBrand"><b>LeetTrader</b></Navbar.Brand>
       
       <Nav className="navItems">
-        {props.login && <Nav.Link>Home</Nav.Link>}
-        {props.login && <Nav.Link>Account</Nav.Link>}
         {props.login && <Nav.Link href="/">Logout</Nav.Link>}
       </Nav>
     </Navbar>

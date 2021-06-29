@@ -3,6 +3,7 @@ import Axios from 'axios'
 import {StockContext} from '../context/StockContext'
 import Num from './Num'
 import Table from 'react-bootstrap/Table'
+import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 import Card from 'react-bootstrap/Card'
 import Spinner from 'react-bootstrap/Spinner'
@@ -20,18 +21,24 @@ export default function BalanceSheet(props) {
   function fetchServer(req){
     Axios({
       method: 'post',
-      url: props.url+'/api/'+req,
+      url: props.url+req,
       data: {uid: props.id}
     })
     .then(res => {
-      if(res.data !== -1){
-        if(req === 'getBal'){setBank(res.data)}
-        if(req === 'getStockWorth'){setStockWorth(res.data)}
+      if(req === '/auth/reset'){
+        setBank(0)
+        setStockWorth(-1)
+        setRefresh(true)
+      }
+      else if(res.data !== -1){
+        if(req === '/api/getBal'){setBank(res.data)}
+        if(req === '/api/getStockWorth'){setStockWorth(res.data)}
       }
     })
   }
-  const getBank = () => fetchServer('getBal')
-  const getStockWorth = () => fetchServer('getStockWorth')
+  const getBank = () => fetchServer('/api/getBal')
+  const getStockWorth = () => fetchServer('/api/getStockWorth')
+  const reset = () => fetchServer('/auth/reset')
 
   // Everytime user buy/sell stock, refresh balance sheet
   if(refresh){
@@ -82,6 +89,7 @@ export default function BalanceSheet(props) {
         </div>
         <br />
         <StockList id={props.id} url={props.url} />
+        <br/><Button variant="danger" onClick={reset}>Reset account</Button>
         </Card.Body>
       </Card>
     </div>

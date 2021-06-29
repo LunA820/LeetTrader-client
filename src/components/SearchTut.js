@@ -9,7 +9,7 @@ function SearchTut() {
       You can then simulate buying or selling the stock you search. <br/><br/>
       For examples:
       <ul>
-        <li>APPL (Apple Inc)</li>
+        <li>AAPL (Apple Inc)</li>
         <li>GOOGL (Alphabet Inc Class A)</li>
         <li>TSLA (Tesla Inc)</li>
       </ul>
