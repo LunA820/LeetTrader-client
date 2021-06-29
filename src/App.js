@@ -15,7 +15,7 @@ function App() {
     <div className="App">
       {uid > 0 ? <LtNav login={true}/> : <LtNav login={false}/>}
       <UidContext.Provider value={{uid, setUid}}>
-        {uid > 0 ? <Home serverUrl={serverUrl}/>:<Login />}
+        {uid > 0? <Home serverUrl={serverUrl}/>:<Login />}
       </UidContext.Provider>
       <footer>Copyright &copy; Luna Yang 2021</footer>
     </div>

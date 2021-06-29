@@ -1,6 +1,4 @@
-.loginDiv{
-  background-image: url("../assets/lt-bg_1.jpg");
-  background-size: cover;
+.Auth{
   min-height: 75vh;
 }
 
@@ -42,4 +40,11 @@
 .invalidLoginAlert{
   margin-top: 20px;
   font-size: 15px;
+}
+.authButtons{
+  text-align: center;
+}
+
+.authBtn{
+  width: 100px;
 }

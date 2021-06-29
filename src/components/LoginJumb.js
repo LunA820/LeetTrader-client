@@ -29,10 +29,13 @@ function LoginJumb(props) {
         <b>Happy investing!</b>
       </p><br />
 
-      <Button variant="primary" onClick={guestLogin}>
-        {props.load && <Spinner animation="border" variant="info" />}
-        {!props.load && <div>Explore by guest account</div>}
-      </Button>
+      {props.load ? 
+        <Spinner animation="border" variant="info" />:
+        <Button variant="primary" onClick={guestLogin}>
+          Explore by guest account
+        </Button>}
+      
+      
     </Jumbotron>
   )
 }
