@@ -1,7 +1,4 @@
-.homePage{
-  background-image: url("../assets/lt-bg_1.jpg");
-  background-size: cover;
-}
+
 
 .stockZone{
   display: flex;
@@ -9,4 +6,5 @@
   flex-wrap: wrap-reverse;
   min-height: 70vh;
   margin-top: 7vh;
+  margin-bottom: 3vh;
 }

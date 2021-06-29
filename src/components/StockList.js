@@ -17,11 +17,7 @@ function StockList(props) {
       url: props.url+'/api/getStockList',
       data: {uid: props.id}
     })
-    .then(res=>{
-      (res.data===-1) ? setUserList([]):setUserList(res.data)
-      // if (res.data != -1){setUserList(res.data)}
-      // else{setUserList([])}
-    })
+    .then(res=>{(res.data===-1) ? setUserList([]):setUserList(res.data)})
   }
 
   if(refresh){

@@ -6,7 +6,7 @@
 .stockCard{
   width: 30vw;
   min-width: 300px;
-  min-height: 60vh;
+  min-height: 70vh;
   margin-bottom: 35px;
   background-color: rgba(200, 200, 200, 0.45);
 }

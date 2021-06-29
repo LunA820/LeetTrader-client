@@ -17,7 +17,7 @@ function App() {
       <UidContext.Provider value={{uid, setUid}}>
         {uid > 0 ? <Home serverUrl={serverUrl}/>:<Login />}
       </UidContext.Provider>
-      <footer className="copyRight">Copyright &copy; Luna Yang 2021</footer>
+      <footer>Copyright &copy; Luna Yang 2021</footer>
     </div>
   );
 }

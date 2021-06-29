@@ -4,18 +4,14 @@
   min-height: 100vh;
 }
 
-.neg{
-  color: red
-}
-
-.pos{
-  color: greenyellow
-}
-
-.copyRight{
+footer{
   color: white;
   text-align: center;
-  padding-top: 3vh;
+  padding-top: 8px;
   background-color: rgba(40, 40, 40, 0.7);
-  min-height: 10vh;
+  min-height: 7vh;
 }
+
+.neg{color: red}
+
+.pos{color: greenyellow}

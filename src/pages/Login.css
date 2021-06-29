@@ -1,7 +1,7 @@
 .loginDiv{
   background-image: url("../assets/lt-bg_1.jpg");
   background-size: cover;
-  min-height: 90vh;
+  min-height: 75vh;
 }
 
 .loginPage{
@@ -12,6 +12,7 @@
   font-size: calc(6px + 2.5vmin);
   padding-left: 5vw;
   padding-right: 5vw;
+  margin-top: 8vh;
 }
 
 .logJumb{
