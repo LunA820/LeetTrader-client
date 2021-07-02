@@ -48,6 +48,7 @@ function Stock(props) {
     <div>
       <Card className="stockCard">
         <Card.Body>
+          {/* Search Bar */}
           <Form.Group className="searchBar">
             <Form.Control 
               placeholder="Stock Code (i.e. AAPL)" 
@@ -56,15 +57,19 @@ function Stock(props) {
             <Button variant="success" onClick={search}>Search</Button>
           </Form.Group>
           <br />
+
           { // Load Spinner
             loading && <div><Spinner animation="grow" variant="primary" />
             <Spinner animation="grow" variant="secondary" />&nbsp;<Spinner animation="grow" variant="success" />&nbsp;
             <Spinner animation="grow" variant="danger" />&nbsp;<Spinner animation="grow" variant="warning" />
             </div>
           }
-          {
+
+          { 
             !loading && <div>
-              {stockInfo.c > 0 ? <div>
+              {stockInfo.c > 0 ? 
+              <div>
+                {/* Stock information (If stock code is valid)*/}
                 <SearchTable sInfo={stockInfo} sid={searchId}/>
                 <Trade id={props.id} searchId={searchId} url={props.url} price={stockInfo.c}/><br/>
                 <Alert variant="warning">
@@ -75,7 +80,10 @@ function Stock(props) {
                       here
                   </a>.
                 </Alert>
-              </div>:<div>
+              </div>
+              :
+              <div>
+                {/* Alert */}
                 {stockInfo.c === 0 && <Alert variant="danger">Invalid Stock Code</Alert>}
                 <SearchTut />
               </div>

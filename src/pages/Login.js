@@ -22,8 +22,8 @@ export default function Login() {
   // States for displaying alerts
   const [loginAlert, setLoginAlert] = useState(false)
   const [regAlert, setRegAlert] = useState(false)
-  const [regSuccess, setRegSuccess] = useState(false)
 
+  
   function setLoading(x){
     setLoginLoad(x)
     setGuestLoad(x)
@@ -32,7 +32,6 @@ export default function Login() {
   function clearAlert(){
     setLoginAlert(false)
     setRegAlert(false)
-    setRegSuccess(false)
   }
 
   function auth(m){
@@ -48,8 +47,8 @@ export default function Login() {
       if (m === 'login'){
         res.data === -1 ? setLoginAlert(true) : setUid(res.data)
       }
-      else{
-        res.data ? setRegSuccess(true) : setRegAlert(true)
+      if (m === 'register'){
+        res.data ? setUid(res.data) : setRegAlert(true)
       }
     })
   }
@@ -102,9 +101,6 @@ export default function Login() {
             </Alert>}
             {regAlert && <Alert variant="danger" className="invalidLoginAlert">
               Email already used. Please use another email.
-            </Alert>}
-            {regSuccess && <Alert variant="danger" className="invalidLoginAlert">
-              Registration success. You can login now.
             </Alert>}
           </Form>
           </div>

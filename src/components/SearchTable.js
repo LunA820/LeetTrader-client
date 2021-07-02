@@ -9,7 +9,7 @@ function SearchTable(props) {
     <div>
       <h1 className="priceChange">
         {props.sid} &nbsp;(
-        {diff >= 0 ? <span className="pos">+</span>:<span className="neg">-</span>}
+        {diff >= 0 && <span className="pos">+</span>}
         {diff >= 0 ? <span className="pos">{diff}</span>:<span className="neg">{diff}</span>})
       </h1>
 
