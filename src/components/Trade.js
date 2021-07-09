@@ -4,7 +4,6 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 import {StockContext} from '../context/StockContext'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import './Stock.css'
 
 
