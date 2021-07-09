@@ -41,7 +41,7 @@ function StockList(props) {
                     return <tr>
                       <td>{item.sid}</td>
                       <td>{item.qty}</td>
-                      <td>{item.cost}</td>
+                      <td>{item.cost.toFixed(2)}</td>
                       <td>{item.worth.toFixed(2)}</td>
                       <td><Num value={item.profit.toFixed(2)}/></td>
                     </tr>
