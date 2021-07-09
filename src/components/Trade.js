@@ -13,11 +13,13 @@ function Trade(props) {
   const [sellQty, setSellQty] = useState(-1)
   const [loading, setLoading] = useState(false)
 
+  // If buy/sell successfully, refresh user's balance sheet
+  const {setRefresh} = useContext(StockContext)
+
   // Alert States
   const [overdrawAlert, setOverdrawAlert] = useState(false)
   const [tradeAlert, settradeAlert] = useState(false)
   const [overSellAlert, setOverSellAlert] = useState(false)
-  const {setRefresh} = useContext(StockContext)
 
 
   const clearAlert = () => {

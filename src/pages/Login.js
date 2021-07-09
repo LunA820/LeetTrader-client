@@ -10,7 +10,7 @@ import './Login.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-export default function Login() {
+export default function Login(props) {
   const {setUid} = useContext(UidContext)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -39,7 +39,7 @@ export default function Login() {
     clearAlert()
     Axios({
       method: 'post',
-      url: 'https://luna-lt-server.herokuapp.com/auth/'+m,
+      url: props.serverUrl+'/auth/'+m,
       data: {email: email, password: password}
     })
     .then(res=>{

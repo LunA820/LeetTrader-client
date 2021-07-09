@@ -13,9 +13,8 @@ function StockList(props) {
 
   const getStockList = () => {
     Axios({
-      method: 'post',
-      url: props.url+'/api/getStockList',
-      data: {uid: props.id}
+      method: 'get',
+      url: props.url+`/api/getStockList/${props.id}`,
     })
     .then(res=>{(res.data===-1) ? setUserList([]):setUserList(res.data)})
   }

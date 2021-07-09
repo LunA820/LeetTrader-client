@@ -27,12 +27,27 @@ function Stock(props) {
    * If stock code is valid, set {searchId} = {sid},
    * searchId will be passed to the Trade component for buying / selling.
    */
+  // const search = () => {
+  //   setLoading(true)
+  //   Axios({
+  //     method: 'post',
+  //     url: props.url+'/api/search',
+  //     data: {sid: sid}
+  //   })
+  //   .then(res=>{
+  //     setLoading(false)
+  //     setStockInfo(res.data)
+  //     if(res.data.c !== 0){
+  //       setSearchId(sid)
+  //     }
+  //   })
+  // }
+
   const search = () => {
     setLoading(true)
     Axios({
-      method: 'post',
-      url: props.url+'/api/search',
-      data: {sid: sid}
+      method: 'get',
+      url: props.url+`/api/search/${sid}`
     })
     .then(res=>{
       setLoading(false)
@@ -42,6 +57,7 @@ function Stock(props) {
       }
     })
   }
+
 
 
   return (
