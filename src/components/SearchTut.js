@@ -10,7 +10,7 @@ function SearchTut() {
       For examples:
       <ul>
         <li>AAPL (Apple Inc)</li>
-        <li>GOOGL (Alphabet Inc Class A)</li>
+        <li>GOOGL (Alphabet Inc)</li>
         <li>TSLA (Tesla Inc)</li>
       </ul>
       You can find more stock codes 

@@ -1,5 +1,6 @@
 import React from 'react'
 import Table from 'react-bootstrap/Table'
+import WatchlistBtn from './WatchlistBtn'
 
 
 function SearchTable(props) {
@@ -7,12 +8,11 @@ function SearchTable(props) {
 
   return (
     <div>
-      <h1 className="priceChange">
+      <h2 className="priceChange">
         {props.sid} &nbsp;(
         {diff >= 0 && <span className="pos">+</span>}
         {diff >= 0 ? <span className="pos">{diff}</span>:<span className="neg">{diff}</span>})
-      </h1>
-
+      </h2>
 
       <Table striped bordered hover size="sm" variant="dark">
         <tbody>
@@ -30,6 +30,7 @@ function SearchTable(props) {
           <tr><td className="searchTxt">&nbsp;&nbsp;Prev. Close</td><td>{props.sInfo.pc.toFixed(2)}</td></tr>
         </tbody>
       </Table>
+      <WatchlistBtn url={props.url} uid={props.uid} sid={props.sid}/>
     </div>
     
   )

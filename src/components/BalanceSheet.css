@@ -3,8 +3,8 @@
 }
 
 .stockList{
-  min-width: 55vw;
-  max-width: 80vw;
+  min-width: 400px;
+  width: 45vw;
 }
 
 .stockListHead{

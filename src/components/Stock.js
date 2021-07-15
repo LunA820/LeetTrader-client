@@ -22,27 +22,6 @@ function Stock(props) {
   const [loading, setLoading] = useState(false)
   
 
-  /**
-   * Search Stock according to {sid}.
-   * If stock code is valid, set {searchId} = {sid},
-   * searchId will be passed to the Trade component for buying / selling.
-   */
-  // const search = () => {
-  //   setLoading(true)
-  //   Axios({
-  //     method: 'post',
-  //     url: props.url+'/api/search',
-  //     data: {sid: sid}
-  //   })
-  //   .then(res=>{
-  //     setLoading(false)
-  //     setStockInfo(res.data)
-  //     if(res.data.c !== 0){
-  //       setSearchId(sid)
-  //     }
-  //   })
-  // }
-
   const search = () => {
     setLoading(true)
     Axios({
@@ -57,7 +36,6 @@ function Stock(props) {
       }
     })
   }
-
 
 
   return (
@@ -86,7 +64,7 @@ function Stock(props) {
               {stockInfo.c > 0 ? 
               <div>
                 {/* Stock information (If stock code is valid)*/}
-                <SearchTable sInfo={stockInfo} sid={searchId}/>
+                <SearchTable sInfo={stockInfo} sid={searchId} uid={props.id} url={props.url}/>
                 <Trade id={props.id} searchId={searchId} url={props.url} price={stockInfo.c}/><br/>
                 <Alert variant="warning">
                   Find more stock codes at <a 

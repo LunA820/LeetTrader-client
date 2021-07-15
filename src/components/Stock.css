@@ -4,8 +4,8 @@
 }
 
 .stockCard{
-  width: 30vw;
-  min-width: 300px;
+  width: 25vw;
+  min-width: 250px;
   min-height: 70vh;
   margin-bottom: 35px;
   background-color: rgba(200, 200, 200, 0.45);
@@ -18,4 +18,10 @@
 
 .priceChange{
   text-align: center;
+}
+
+.wl-btn{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 15px;
 }
